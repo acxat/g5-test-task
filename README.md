@@ -19,6 +19,8 @@ This project sets up log collection from Docker containers using **Fluent Bit**,
 ---
 
 ## Project structure
+
+```
 .
 ├── ansible
 │   ├── become_pass      # Store your sudo password here
@@ -37,7 +39,9 @@ This project sets up log collection from Docker containers using **Fluent Bit**,
 │           └── prometheus.yml
 ├── prometheus.yml       # Prometheus configs
 └── README.md
+```
 
+---
 
 > **Note:**
 > Create a file named `ansible/become_password` and store the current user's `sudo` password in plain text.  
@@ -50,6 +54,9 @@ This project sets up log collection from Docker containers using **Fluent Bit**,
 ```bash
 chmod +x deploy.sh
 ./deploy.sh
+```
+
+---
 
 ## Access
 
@@ -58,6 +65,8 @@ chmod +x deploy.sh
         Default login: admin / admin
 
     Prometheus: not accessible externally (port closed in docker-compose.yml)
+
+---
 
 ## Requirements
 
