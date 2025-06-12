@@ -1,0 +1,42 @@
+- name: Install and configure Fluent Bit
+  hosts: 127.0.0.1
+  connection: local
+  become: yes
+  tasks:
+
+    - name: Add Fluent Bit GPG key
+      apt_key:
+        url: https://packages.fluentbit.io/fluentbit.key
+        state: present
+
+    - name: Add Fluent Bit repository
+      apt_repository:
+        repo: deb https://packages.fluentbit.io/ubuntu/noble noble main
+        state: present
+        filename: fluent-bit
+
+    - name: Update APT cache
+      apt:
+        update_cache: true
+
+    - name: Install Fluent Bit
+      apt:
+        name: fluent-bit
+        state: present
+
+    - name: Deploy config
+      copy:
+        src: fluent-bit.conf
+        dest: /etc/fluent-bit/{{ item }}
+        owner: root
+        group: root
+        mode: 0644
+      with_items:
+      - fluent-bit.conf
+      - parsers.conf
+
+    - name: Ensure Fluent Bit is running
+      systemd:
+        name: fluent-bit
+        enabled: yes
+        state: restarted
